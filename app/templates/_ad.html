@@ -1,0 +1,8 @@
+{% macro ad(slot_name) -%}
+{%- if cfg.ADSENSE_CLIENT and cfg.ADSENSE_SLOTS[slot_name] -%}
+<div class="ad ad--{{ slot_name }}" aria-label="Advertisement">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="{{ cfg.ADSENSE_CLIENT }}"
+       data-ad-slot="{{ cfg.ADSENSE_SLOTS[slot_name] }}" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+{%- endif -%}
+{%- endmacro %}

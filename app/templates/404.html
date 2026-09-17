@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Page not found – {{ cfg.SITE_NAME }}{% endblock %}
+{% block description %}This page doesn't exist.{% endblock %}
+{% block head %}<meta name="robots" content="noindex">{% endblock %}
+{% block main %}
+<section class="hero">
+  <div class="wrap wrap--narrow">
+    <h1>Page not found</h1>
+    <p class="lead">This page doesn't exist. <a href="/">Go back to the downloader</a>.</p>
+  </div>
+</section>
+{% endblock %}

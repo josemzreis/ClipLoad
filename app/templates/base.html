@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ cfg.SITE_NAME }}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{% endblock %}">
+  <link rel="canonical" href="{{ canonical }}">
+  <meta name="theme-color" content="#5b4bff">
+  <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ cfg.SITE_NAME }}">
+  <meta property="og:title" content="{{ self.title() }}">
+  <meta property="og:description" content="{{ self.description() }}">
+  <meta property="og:url" content="{{ canonical }}">
+  {% if has_og_image %}<meta property="og:image" content="{{ cfg.SITE_URL }}/static/og.png">{% endif %}
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="/static/css/style.css">
+  {% if cfg.ADSENSE_CLIENT %}<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>{% endif %}
+  {% block head %}{% endblock %}
+</head>
+<body{% if cfg.ADSENSE_CLIENT %} data-adsense="{{ cfg.ADSENSE_CLIENT }}"{% endif %}>
+  <header class="topbar">
+    <div class="wrap topbar__inner">
+      <a class="logo" href="/"><img src="/static/icon.svg" alt="" width="28" height="28">{{ cfg.SITE_NAME }}</a>
+      <nav class="topnav" aria-label="Platforms">
+        <a href="/tiktok-downloader">TikTok</a>
+        <a href="/youtube-shorts-downloader">Shorts</a>
+        <a href="/twitch-clip-downloader">Twitch</a>
+        <a href="/instagram-reels-downloader">Instagram</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>{% block main %}{% endblock %}</main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <nav class="footer__links" aria-label="All downloaders">
+        {% for p in platforms %}<a href="/{{ p.slug }}">{{ p.name }} downloader</a>{% endfor %}
+      </nav>
+      <nav class="footer__legal" aria-label="Legal">
+        <a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/dmca">DMCA</a>
+      </nav>
+      <p class="muted">© {{ cfg.SITE_NAME }}. Download only content you own or have permission to use. {{ cfg.SITE_NAME }} is not affiliated with TikTok, YouTube, Twitch, Instagram, X, Reddit or Facebook.</p>
+    </div>
+  </footer>
+  <script src="/static/js/app.js" defer></script>
+</body>
+</html>
