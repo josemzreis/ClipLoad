@@ -117,12 +117,16 @@ def probe(url: str) -> dict:
     info = _extract(url)
     formats = info.get("formats") or []
     # "1080p" means the shorter side, like yt-dlp's `res` sort (a 1080x1920 Short is 1080p).
+    video_formats = [
+        f for f in formats
+        if f.get("vcodec") not in (None, "", "none") or f.get("height") or f.get("width")
+    ]
     resolutions = {
         min(f["width"], f["height"]) if f.get("width") else f["height"]
-        for f in formats
-        if f.get("height") and f.get("vcodec") not in (None, "none")
+        for f in video_formats
+        if f.get("height")
     }
-    has_video = bool(resolutions) or not formats or any(f.get("vcodec") not in (None, "none") for f in formats)
+    has_video = bool(video_formats) or info.get("vcodec") not in (None, "", "none") or not formats
     top = max(resolutions) if resolutions else 0
     qualities = [q for q in ("2160", "1440", "1080", "720", "480", "360") if int(q) <= top]
     return {

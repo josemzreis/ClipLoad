@@ -23,10 +23,10 @@ Railway can build this repository from its `Dockerfile`, so Docker Desktop is no
 4. Open the service's **Variables** panel and add:
 
 	```text
-	SITE_NAME=ClipLoad
-	SITE_URL=https://YOUR-RAILWAY-DOMAIN.up.railway.app
-	CONTACT_EMAIL=your-real-abuse-email@example.com
-	TRUST_PROXY_HEADERS=true
+    SITE_NAME=ClipLoad
+    SITE_URL=https://YOUR-RAILWAY-DOMAIN.up.railway.app
+    CONTACT_EMAIL=your-real-abuse-email@example.com
+    TRUST_PROXY_HEADERS=true
 	```
 
 	Leave the `ADSENSE_*` variables empty for the first deployment.
