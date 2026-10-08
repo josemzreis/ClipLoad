@@ -7,13 +7,13 @@ search engines treat them as distinct, useful pages (not doorway duplicates).
 HOME = {
     "slug": "",
     "name": "All platforms",
-    "title": "Video Downloader – Save Clips in HD, No Watermark",
-    "description": "Paste a link from TikTok, YouTube Shorts, Twitch, Instagram, X or Reddit and download the video in HD or MP3. Free, fast, no watermark, no sign-up.",
-    "h1": "Download any video clip in HD",
-    "lead": "Paste a link from TikTok, YouTube, Twitch, Instagram, X, Reddit and 1,000+ other sites. No watermark, no sign-up, no app.",
+    "title": "Video Downloader for Your Own Content – HD & MP3",
+    "description": "Save videos you own or have permission to use from supported platforms. Check platform rules before downloading. Free, online, no sign-up.",
+    "h1": "Save videos you own or have permission to use",
+    "lead": "A simple tool for creators to back up authorized videos from supported platforms. Check each platform's rules before downloading.",
     "about": [
-        "{site} is a free online video downloader built for speed. Paste a link, pick a quality and your file starts downloading, usually within seconds. There's nothing to install and no account to create.",
-        "We always fetch the highest-quality source the platform offers, up to 4K when available, and remove platform watermarks where a clean version exists. You can also save just the audio as an MP3.",
+        "{site} is a free online tool for creators who need to save copies of their own videos or media they are authorized to use. Paste a supported link, choose an available format, and process the file in your browser without installing an app.",
+        "Only use the service where you have the necessary rights and the source platform permits downloading. Publicly viewable content is not automatically free to copy, download, or repost.",
     ],
     "steps": [
         ("Copy the link", "Open the video in the app or website and tap Share, then Copy link."),
@@ -23,9 +23,9 @@ HOME = {
     "faqs": [
         ("Is {site} free?", "Yes. It's completely free with no limits on the number of downloads. The site is supported by ads."),
         ("Do I need to install anything?", "No. {site} works in any browser on iPhone, Android, Windows, Mac and Linux."),
-        ("Which sites are supported?", "TikTok, YouTube and YouTube Shorts, Twitch clips and VODs, Instagram Reels, X (Twitter), Facebook, Reddit, Vimeo, Dailymotion and more than 1,000 other sites."),
-        ("Are downloaded videos watermarked?", "No. We never add a watermark, and for platforms like TikTok we fetch the original version without the platform watermark whenever it's available."),
-        ("Is it legal to download videos?", "Download only content you own, content in the public domain, or content you have permission to use. Respect creators and each platform's terms."),
+        ("Which sites are supported?", "The tool can process links from supported services such as TikTok, YouTube, Twitch, Instagram, X, Facebook and Reddit. Availability varies by link and service."),
+        ("Can I download any video I can view?", "No. Only submit content you own or have permission to use, and only where the source platform's terms allow downloading."),
+        ("Is it legal to download videos?", "That depends on the content, your rights, local law, and the source platform's terms. Publicly viewable content is not automatically authorized for download or reuse."),
     ],
 }
 
@@ -33,22 +33,22 @@ PLATFORMS = [
     {
         "slug": "tiktok-downloader",
         "name": "TikTok",
-        "title": "TikTok Downloader – Save TikTok Videos Without Watermark",
-        "description": "Download TikTok videos without watermark in HD. Paste the TikTok link and save the MP4 or MP3 instantly. Free, no app, no login.",
-        "h1": "TikTok video downloader without watermark",
-        "lead": "Save TikTok videos in HD with no watermark and no logo. Works on iPhone, Android and desktop.",
+        "title": "TikTok Video Downloader for Your Own Content",
+        "description": "Save your own TikTok videos or content you are authorized to use, where TikTok's terms allow it. MP4 or MP3, free and online.",
+        "h1": "Save your own TikTok videos",
+        "lead": "A simple way for creators to back up their own TikTok videos. Use only content you have permission to download and follow TikTok's terms.",
         "placeholder": "https://www.tiktok.com/@user/video/...",
         "about": [
-            "TikTok adds a moving watermark with the creator's username when you save a video from the app. {site} fetches the original upload instead, so you get a clean MP4 at the best resolution TikTok stores.",
-            "It's ideal for creators backing up their own videos or reposting their content to Reels and Shorts without a competitor's logo on it.",
+            "{site} is intended for creators saving copies of their own TikTok videos or content they have permission to use. TikTok's features and terms may limit how content can be saved or reused.",
+            "Before downloading, confirm that you have the necessary rights and that your intended use is allowed by TikTok and any applicable law.",
         ],
         "steps": [
             ("Copy the TikTok link", "In TikTok, tap Share on the video, then Copy link."),
             ("Paste the link", "Paste it into the box above. The preview appears instantly."),
-            ("Save without watermark", "Tap Download to save the clean MP4, or MP3 for the sound only."),
+            ("Save your authorized copy", "Choose an available format only if you own the content or have permission to use it."),
         ],
         "faqs": [
-            ("How do I download a TikTok without the watermark?", "Copy the video's link, paste it into {site} and tap Download. The file you get has no TikTok watermark."),
+            ("Can I download any TikTok video?", "Only download videos you own or have permission to use, and only where TikTok's terms allow it."),
             ("Can I download TikTok sounds as MP3?", "Yes. After pasting the link, choose MP3 to save just the audio."),
             ("Does it work on iPhone?", "Yes. On iOS, open {site} in Safari, paste the link and tap Download. The video is saved to the Files app, and from there you can save it to Photos."),
             ("Can I download private TikTok videos?", "No. Only public videos can be downloaded."),
@@ -217,7 +217,7 @@ PLATFORMS = [
         "title": "Video to MP3 Converter – Extract Audio From Any Video Link",
         "description": "Convert TikTok, YouTube, Twitch and other video links to MP3 online. Paste the link and download high-quality audio. Free and fast.",
         "h1": "Video to MP3 converter",
-        "lead": "Turn any video link into a high-quality MP3. Paste the link, tap MP3, done.",
+        "lead": "Extract audio from a supported video you own or have permission to use. Paste the link and choose MP3.",
         "placeholder": "Paste a video link",
         "about": [
             "{site} extracts the best audio stream from a video and converts it to a 192 kbps MP3 that plays everywhere.",
@@ -242,8 +242,9 @@ LEGAL = {
         "title": "Terms of Use",
         "body": [
             "By using {site} you agree to these terms.",
-            "{site} is a tool that lets you save publicly available media for personal use. You are solely responsible for how you use it. Only download content that you own, that is in the public domain, or that you have permission from the rights holder to download.",
-            "Do not use {site} to infringe copyright, to redistribute other people's content without permission, or in any way that violates the terms of the platform the content comes from.",
+            "{site} processes media links submitted by users. The service does not grant you permission or a license to download, copy, convert, or reuse any content.",
+            "Only submit content that you own or are authorized to use, and only when downloading is permitted by the source platform's terms and applicable law. Public availability does not by itself grant permission.",
+            "Do not use {site} to infringe copyright, redistribute another person's content without permission, or bypass digital-rights management, access controls, paywalls, or other restrictions.",
             "{site} does not host any media. Files are processed temporarily and deleted automatically shortly afterwards.",
             "The service is provided \"as is\", without warranties of any kind. We may limit or suspend access at any time to prevent abuse.",
         ],
@@ -253,16 +254,16 @@ LEGAL = {
         "body": [
             "{site} does not require an account and does not ask for personal information.",
             "Links you submit are processed to fetch the media and are not stored beyond the temporary processing window (under 15 minutes). Downloaded files are deleted automatically.",
-            "We keep standard server logs (IP address, browser, and requested pages) for security and abuse prevention, for up to 30 days.",
-            "We use Google AdSense to show ads. Google and its partners use cookies to serve ads based on your previous visits to this and other websites. You can opt out of personalized advertising at https://adssettings.google.com. Visitors in the EEA, the UK and Switzerland are asked for consent through a certified consent management platform.",
+            "The hosting provider may process technical access logs, such as IP address, browser information, and requested pages, for security and service operation. Log handling and retention may depend on the hosting provider.",
+            "If Google AdSense is enabled, Google and its partners may use cookies or similar technologies to serve and measure ads. You can manage Google ad personalization at https://adssettings.google.com. This application does not include a consent-management platform; the site operator must configure an appropriate Google-certified CMP before serving personalized ads where required.",
             "Questions? Email {email}.",
         ],
     },
     "dmca": {
         "title": "DMCA & Copyright",
         "body": [
-            "{site} respects intellectual property rights. We don't host, cache or index any media. Every file is fetched on demand from the original platform at a user's request and deleted shortly afterwards.",
-            "If you're a rights holder and believe {site} is being used to infringe your work, email {email} with: the URL of the original content, proof of ownership, your contact details, and a statement made in good faith. We'll respond promptly, including by blocking specific URLs from being processed.",
+            "{site} respects intellectual property rights. We do not host or index media libraries. Files are retrieved from third-party sources at a user's request and stored temporarily for processing.",
+            "If you are a rights holder and believe {site} is being used to infringe your work, email {email} with the location of the original content, the specific material at issue, proof of ownership or authority, your contact details, and a good-faith statement. We will review complete notices promptly and take appropriate action.",
         ],
     },
 }

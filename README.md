@@ -1,11 +1,12 @@
 # ClipLoad: paste a link, get the video
 
-A minimal, SEO-first video downloader for TikTok, YouTube, Shorts, Twitch, Instagram, X, Reddit, Facebook and 1,000+ other sites (powered by [yt-dlp](https://github.com/yt-dlp/yt-dlp)).
+A minimal, SEO-first video downloader powered by [yt-dlp](https://github.com/yt-dlp/yt-dlp). It supports the sites handled by yt-dlp's extractors, including TikTok, YouTube, Twitch, Instagram, X, Reddit and Facebook, plus eligible generic video URLs. Not every app, link, or protected video is supported.
 
 - **One step:** paste a link and it's analyzed right away. One click downloads the best quality.
-- **No watermark:** watermarked formats (such as TikTok's) are never picked when a clean one exists.
+- **Authorized use:** download only content you own or have permission to use, and follow the source platform's terms.
 - **High quality:** the best video and audio streams are merged into a compatible MP4 (up to 4K), or saved as MP3.
 - **Built for reach:** server-rendered landing pages per platform, JSON-LD, sitemap, a PWA share target, and ad slots that don't hurt Core Web Vitals.
+- **Safe filenames:** downloaded names are normalized to portable ASCII filenames, independently of the title used for the temporary download file.
 
 ## Run locally
 
@@ -30,6 +31,10 @@ docker run -p 8000:8000 --env-file .env clipload
 ```
 
 Put Cloudflare in front of the server for DNS, TLS, caching of static assets, and bot and abuse protection. Rebuild the image **weekly** so yt-dlp stays current.
+
+### Supported sources
+
+yt-dlp ships extractors for many services and also has a generic extractor, but support is not universal. A platform can block server downloads, require login/cookies, or change without notice. Check the current [yt-dlp supported sites list](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md) and test representative links you are authorized to download after deployment.
 
 ## Docs
 

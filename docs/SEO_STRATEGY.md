@@ -4,8 +4,8 @@
 
 This niche has huge search demand ("tiktok downloader", "youtube to mp4", "twitch clip downloader" each get millions of searches a month worldwide). It also has two structural risks that decide which strategy works:
 
-1. **AdSense policy.** Google's publisher policies don't allow ads on pages that help users obtain copyrighted content without authorization, and they specifically include tools for downloading YouTube videos. Downloader sites are frequently rejected or later have ads disabled.
-   → Apply for AdSense with a site that clearly positions itself around **your own content / creator workflows**, with Terms, Privacy and DMCA pages (all included). Don't depend on AdSense alone: have a **backup ad network** ready (e.g. Adsterra, Monetag, or PropellerAds, which accept this niche; lower quality, but reliable).
+1. **Ad network policy.** Google does not allow content that infringes copyright or pages that assist users in downloading streaming video where the content provider prohibits it. A rights disclaimer or creator-focused copy does not change what the tool enables, so AdSense remains a substantial risk for this product.
+   → Do not assume that another ad network will accept the site. Check the current publisher terms and get written confirmation that this exact service and its formats are eligible before integrating a provider such as Adsterra, Monetag, or PropellerAds. Keep ads disabled until the provider approves the site. Do not use copy changes to conceal the downloader's functionality.
 2. **Google Search and YouTube.** YouTube is Google's own property, and "YouTube downloader" pages get DMCA delisting notices that remove URLs from Google. The YouTube pages are the most competitive *and* the most fragile.
    → **Lead with TikTok, Twitch clips, Reddit, X and Instagram**, and treat YouTube as a secondary page. Traffic from non-Google engines (Bing, Yandex, DuckDuckGo) and non-search channels matters more here than in most niches.
 
@@ -15,12 +15,12 @@ This niche has huge search demand ("tiktok downloader", "youtube to mp4", "twitc
 
 ## 1. Positioning: what to be known for
 
-**"The fastest clean-clip tool for creators."** Streamers turn Twitch clips into TikToks. Creators back up their own uploads and repost across platforms without a competitor's watermark.
+**"A practical backup tool for creators' own media."** Streamers can save copies of their own clips for editing, subject to the source platform's rules. Do not imply that public availability grants download or reuse rights.
 
 Why this positioning:
-- It's the most defensible use case (AdSense review, DMCA, press, and community posts all go better).
+- It makes the intended, authorized use clear, but does not guarantee approval from an ad network or override platform terms.
 - It opens channels generic downloaders can't use: streamer subreddits, editor Discords, and creator newsletters.
-- It targets less-contested long-tail keywords, such as "twitch clip to tiktok" and "download my tiktok without watermark".
+- It targets creator workflow topics, such as backing up your own uploads and preparing your own clips for editing.
 
 **Brand and domain:** pick a short, brandable .com (or .app/.io) **without "youtube", "tiktok" or "twitch" in the name**. Trademark owners win UDRP domain disputes, and platforms send takedown notices to hosts and registrars. The platform keywords go in URL paths (`/tiktok-downloader`), not in the domain. Use `SITE_NAME` and `SITE_URL` to rebrand.
 
@@ -41,8 +41,8 @@ Why this positioning:
 Note: Google now shows FAQ rich results mainly for authoritative sites. The FAQ schema still helps Bing and AI answer engines, and the visible FAQ text captures "how to…" long-tail queries.
 
 ### Title formula
-`[Platform] [Downloader|Video Downloader] – [Top modifier], [Second modifier]`
-Modifiers that users actually search: **without watermark, HD, MP4, MP3, online, free, no app, with sound, 1080p, 4K**.
+`[Platform] [Downloader|Video Downloader] – [Creator use case], [available format]`
+Describe formats and quality accurately; avoid claims that promote watermark removal or downloading without the rights holder's permission.
 
 ---
 
@@ -104,7 +104,7 @@ SEO for a new domain takes 3–6 months to build momentum. These channels bring 
 |---|---|
 | Launch (0 → ~1k daily users) | No ads. Maximize speed and retention while Google evaluates the site, and build content so AdSense review sees a real site. |
 | Apply for AdSense | Once there are 20+ quality pages, legal pages, and steady organic traffic. Set `ADSENSE_CLIENT` and the slot IDs; `ads.txt` is served automatically. Use a **Google-certified CMP** for EEA/UK consent (AdSense's own "Privacy & messaging" works). |
-| If rejected or limited | Switch the `_ad.html` macro to a backup network, and keep AdSense only on the creator-workflow pages. |
+| If rejected or limited | Review the reason and provider terms before making changes. Consider another network only after it confirms this service is eligible; keeping AdSense only on selected pages does not guarantee approval. |
 | Scale | Test ad density on the **result slot** (shown while the file is prepared) against the bottom slot. Never interrupt the download flow with pop-ups or fake download buttons: they destroy retention, get reported as deceptive, and can get Google Safe Browsing to flag the domain. |
 | Later | A premium tier (batch or playlist downloads, no ads, higher limits) and an API for creator tools. |
 

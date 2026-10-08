@@ -20,6 +20,7 @@
       <button type="button" class="btn btn--ghost" id="paste" hidden>Paste</button>
       <button type="submit" class="btn btn--primary" id="go">Download</button>
     </form>
+    <p class="muted" role="note">Only download content you own or have permission to use. Check the source platform's rules; some platforms prohibit downloading.</p>
     <p class="status" id="status" role="status" aria-live="polite"></p>
 
     <div class="result" id="result" hidden>
@@ -52,7 +53,7 @@
   <div class="wrap wrap--narrow prose">
     {% for para in page.about %}<p>{{ para|site }}</p>{% endfor %}
     <ul class="features">
-      <li>No watermark</li><li>HD, up to 4K</li><li>MP4 &amp; MP3</li><li>No sign-up</li><li>Works on mobile</li>
+      <li>For authorized content</li><li>HD, up to 4K</li><li>MP4 &amp; MP3</li><li>No sign-up</li><li>Works on mobile</li>
     </ul>
   </div>
 </section>

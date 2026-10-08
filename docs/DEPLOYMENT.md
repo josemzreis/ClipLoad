@@ -80,9 +80,9 @@ That split is worthwhile once traffic justifies it. It is not required for the f
 
 ## Ads launch checklist
 
-1. Deploy with `ADSENSE_CLIENT` and all slot variables empty. The app emits no ad markup in this state.
+1. Deploy with `ADSENSE_CLIENT` and all slot variables empty. The app emits no ad markup in this state. Keep ads disabled unless the ad provider has approved this specific service and its policies permit the site's content and download functionality.
 2. Publish and verify Terms, Privacy, and DMCA pages, and use a real abuse/copyright contact address.
-3. Add a certified consent management platform for EEA, UK, and Switzerland traffic before personalized ads are enabled.
+3. Configure and test a Google-certified consent management platform for EEA, UK, and Switzerland traffic before enabling AdSense personalization. The application does not include a CMP.
 4. Apply to the ad network only after the domain, legal pages, creator-focused positioning, and useful platform pages are live.
 5. After approval, set the values from `.env.example`, redeploy, and verify `/ads.txt` contains the exact publisher ID supplied by the network.
 6. Check mobile layout, download flow, Core Web Vitals, and accidental ad clicks before increasing ad density.

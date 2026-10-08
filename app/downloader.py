@@ -3,6 +3,7 @@
 Jobs live in process memory, so run a single app worker per host (see docs/ARCHITECTURE.md).
 """
 import ipaddress
+import logging
 import os
 import re
 import shutil
@@ -10,6 +11,7 @@ import socket
 import tempfile
 import threading
 import time
+import unicodedata
 import uuid
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
@@ -20,6 +22,8 @@ import yt_dlp
 
 from . import config
 
+logger = logging.getLogger(__name__)
+
 
 class DownloadError(Exception):
     """Error whose message is safe to show to end users."""
@@ -27,6 +31,11 @@ class DownloadError(Exception):
 
 QUALITIES = ("best", "2160", "1440", "1080", "720", "480", "360", "mp3")
 _URL_RE = re.compile(r"https?://[^\s<>\"']+")
+_VIDEO_EXTENSIONS = {
+    "3gp", "avi", "f4v", "flv", "m2ts", "m4v", "mkv", "mov", "mp4", "mpeg", "mpg",
+    "m3u8", "mpd", "mts", "ogv", "ts", "vob", "webm", "wmv",
+}
+_AUDIO_EXTENSIONS = {"aac", "aiff", "au", "flac", "m4a", "mid", "mp3", "ogg", "opus", "wav", "weba", "wma"}
 
 # TikTok (and a few others) expose a watermarked "download" format; never pick it when an alternative exists.
 _NO_WATERMARK = "[format_note!*=?watermark]"
@@ -111,22 +120,33 @@ def _check(info: dict) -> dict:
     return info
 
 
+def _has_video(info: dict) -> bool:
+    formats = info.get("formats") or []
+    video_formats = [
+        f for f in formats
+        if f.get("vcodec") not in (None, "", "none") or f.get("height") or f.get("width")
+    ]
+    if video_formats or info.get("vcodec") not in (None, "", "none"):
+        return True
+    ext = (info.get("ext") or "").lower()
+    if ext in _VIDEO_EXTENSIONS:
+        return True
+    return not formats and ext not in _AUDIO_EXTENSIONS
+
+
 def probe(url: str) -> dict:
     """Return public metadata and the quality options available for a link."""
     url = validate_url(url)
     info = _extract(url)
     formats = info.get("formats") or []
     # "1080p" means the shorter side, like yt-dlp's `res` sort (a 1080x1920 Short is 1080p).
-    video_formats = [
-        f for f in formats
-        if f.get("vcodec") not in (None, "", "none") or f.get("height") or f.get("width")
-    ]
+    video_formats = [f for f in formats if f.get("vcodec") not in (None, "", "none") or f.get("height") or f.get("width")]
     resolutions = {
         min(f["width"], f["height"]) if f.get("width") else f["height"]
         for f in video_formats
         if f.get("height")
     }
-    has_video = bool(video_formats) or info.get("vcodec") not in (None, "", "none") or not formats
+    has_video = _has_video(info)
     top = max(resolutions) if resolutions else 0
     qualities = [q for q in ("2160", "1440", "1080", "720", "480", "360") if int(q) <= top]
     return {
@@ -158,9 +178,17 @@ def _format_opts(quality: str) -> dict:
 
 
 def _safe_filename(title: str, ext: str) -> str:
-    name = re.sub(r"[^\w\s.-]", "", title, flags=re.UNICODE)
-    name = re.sub(r"\s+", " ", name).strip()[:120] or "video"
-    return f"{name}.{ext}"
+    name = unicodedata.normalize("NFKD", title).encode("ascii", "ignore").decode("ascii")
+    name = re.sub(r"[^A-Za-z0-9._-]+", "-", name).strip(" .-_").lower()[:100].rstrip(" .-_")
+    name = name or "video"
+    if name.split(".", 1)[0].upper() in {
+        "CON", "PRN", "AUX", "NUL",
+        *(f"COM{i}" for i in range(1, 10)),
+        *(f"LPT{i}" for i in range(1, 10)),
+    }:
+        name = f"video-{name}"
+    safe_ext = ext.lower() if re.fullmatch(r"[A-Za-z0-9]{1,10}", ext) else "mp4"
+    return f"{name}.{safe_ext}"
 
 
 @dataclass
@@ -204,33 +232,33 @@ def get_job(job_id: str) -> Optional[Job]:
 
 
 def _run(job: Job) -> None:
-    job.workdir = tempfile.mkdtemp(dir=config.DOWNLOAD_DIR)
-    streams: dict = {}
-
-    def on_progress(d: dict) -> None:
-        if d.get("status") != "downloading":
-            return
-        job.status = "downloading"
-        total = d.get("total_bytes") or d.get("total_bytes_estimate") or 0
-        streams[d.get("filename")] = (d.get("downloaded_bytes") or 0, total)
-        done = sum(s[0] for s in streams.values())
-        size = sum(s[1] for s in streams.values())
-        if size:
-            job.progress = max(job.progress, min(95.0, done / size * 95))
-
-    def on_postprocess(d: dict) -> None:
-        if d.get("status") == "started":
-            job.status = "processing"
-
-    opts = _base_opts()
-    opts.update(_format_opts(job.quality))
-    opts.update({
-        "outtmpl": os.path.join(job.workdir, "%(id).80s.%(ext)s"),
-        "progress_hooks": [on_progress],
-        "postprocessor_hooks": [on_postprocess],
-        "max_filesize": config.MAX_FILESIZE_MB * 1024 * 1024,
-    })
     try:
+        job.workdir = tempfile.mkdtemp(dir=config.DOWNLOAD_DIR)
+        streams: dict = {}
+
+        def on_progress(d: dict) -> None:
+            if d.get("status") != "downloading":
+                return
+            job.status = "downloading"
+            total = d.get("total_bytes") or d.get("total_bytes_estimate") or 0
+            streams[d.get("filename")] = (d.get("downloaded_bytes") or 0, total)
+            done = sum(s[0] for s in streams.values())
+            size = sum(s[1] for s in streams.values())
+            if size:
+                job.progress = max(job.progress, min(95.0, done / size * 95))
+
+        def on_postprocess(d: dict) -> None:
+            if d.get("status") == "started":
+                job.status = "processing"
+
+        opts = _base_opts()
+        opts.update(_format_opts(job.quality))
+        opts.update({
+            "outtmpl": os.path.join(job.workdir, "%(id).80s.%(ext)s"),
+            "progress_hooks": [on_progress],
+            "postprocessor_hooks": [on_postprocess],
+            "max_filesize": config.MAX_FILESIZE_MB * 1024 * 1024,
+        })
         with yt_dlp.YoutubeDL(opts) as ydl:
             info = _check(ydl.extract_info(job.url, download=False))
             info = ydl.process_ie_result(info, download=True)
@@ -249,7 +277,8 @@ def _run(job: Job) -> None:
         job.error, job.status = str(exc), "error"
     except yt_dlp.utils.DownloadError as exc:
         job.error, job.status = _friendly(str(exc)), "error"
-    except Exception:  # noqa: BLE001 - never leak internals to users
+    except Exception:
+        logger.exception("Unexpected failure while processing download job %s", job.id)
         job.error, job.status = _friendly(""), "error"
 
 
